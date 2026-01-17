@@ -17,9 +17,7 @@ public class TuTienCultivation extends JavaPlugin {
         getCommand("tuluyen").setExecutor(new TuLuyenCommand());
         getCommand("dotpha").setExecutor(new DotPhaCommand());
 
-        getServer().getPluginManager().registerEvents(
-                new CultivationListener(), this
-        );
+        getServer().getPluginManager().registerEvents(new CultivationListener(), this);
     }
 
     public static CultivationStorage storage() {
