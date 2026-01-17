@@ -1,0 +1,9 @@
+cultivation:
+  tick: 20          # mỗi bao nhiêu tick hút linh khí (20 = 1s)
+  base-health: 20.0 # máu gốc
+  health-per-realm: 4.0
+  damage-per-realm: 1.0
+
+thien-kiep:
+  boss-health: 40
+  duration: 200
