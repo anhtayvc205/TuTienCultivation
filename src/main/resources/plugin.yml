@@ -1,11 +1,12 @@
 name: TuTienCultivation
-version: 1.0
 main: me.tutien.cultivation.TuTienCultivation
+version: 1.0
 api-version: 1.21
-author: TuanAng
 
 commands:
+  tutien:
+    description: Bắt đầu tu tiên
   tuluyen:
-    description: Bat/tat tu luyen
+    description: Tu luyện linh khí
   dotpha:
-    description: Dot pha canh gioi
+    description: Đột phá cảnh giới
