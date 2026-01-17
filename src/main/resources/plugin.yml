@@ -1,8 +1,8 @@
 name: TuTienCultivation
-main: me.tutien.cultivation.TuTienCultivation
 version: 1.0
+main: me.tutien.cultivation.TuTienCultivation
 api-version: 1.21
-
+author: TuTien
 commands:
   tutien:
   tuluyen:
