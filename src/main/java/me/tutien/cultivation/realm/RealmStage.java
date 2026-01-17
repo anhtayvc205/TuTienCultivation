@@ -4,53 +4,45 @@ import me.tutien.cultivation.dao.DaoType;
 
 public enum RealmStage {
 
-    /* ================= CHÍNH ĐẠO ================= */
-    PHÀM_NHÂN(DaoType.CHINH_DAO, "Phàm Nhân", 80),
-    LUYỆN_KHÍ(DaoType.CHINH_DAO, "Luyện Khí", 160),
-    TRÚC_CƠ(DaoType.CHINH_DAO, "Trúc Cơ", 300),
-    KẾT_ĐAN(DaoType.CHINH_DAO, "Kết Đan", 550),
-    NGUYÊN_ANH(DaoType.CHINH_DAO, "Nguyên Anh", 900),
-    HÓA_THẦN(DaoType.CHINH_DAO, "Hóa Thần", 1400),
-    LUYỆN_HƯ(DaoType.CHINH_DAO, "Luyện Hư", 2000),
-    HỢP_THỂ(DaoType.CHINH_DAO, "Hợp Thể", 2800),
-    ĐẠI_THỪA(DaoType.CHINH_DAO, "Đại Thừa", 3800),
+    PHAM_NHAN(DaoType.CHINH_DAO, "Phàm Nhân", 100),
+    LUYEN_KHI(DaoType.CHINH_DAO, "Luyện Khí", 1_000),
+    TRUC_CO(DaoType.CHINH_DAO, "Trúc Cơ", 10_000),
+    KET_DAN(DaoType.CHINH_DAO, "Kết Đan", 100_000),
+    NGUYEN_ANH(DaoType.CHINH_DAO, "Nguyên Anh", 1_000_000),
+    HOA_THAN(DaoType.CHINH_DAO, "Hóa Thần", 10_000_000),
+    LUYEN_HU(DaoType.CHINH_DAO, "Luyện Hư", 100_000_000),
+    HOP_THE(DaoType.CHINH_DAO, "Hợp Thể", 1_000_000_000L),
+    DAI_THUA(DaoType.CHINH_DAO, "Đại Thừa", 10_000_000_000L),
 
-    /* ================= KIẾM TU ================= */
-    KIẾM_TU_PHÀM(DaoType.KIEM_DAO, "Kiếm Tu Phàm", 120),
-    KIẾM_Ý_SƠ_KHAI(DaoType.KIEM_DAO, "Kiếm Ý Sơ Khai", 260),
-    KIẾM_TÂM(DaoType.KIEM_DAO, "Kiếm Tâm", 480),
-    KIẾM_HỒN(DaoType.KIEM_DAO, "Kiếm Hồn", 800),
-    KIẾM_VỰC(DaoType.KIEM_DAO, "Kiếm Vực", 1300),
-    KIẾM_ĐẠO(DaoType.KIEM_DAO, "Kiếm Đạo", 2000),
-    KIẾM_THẦN(DaoType.KIEM_DAO, "Kiếm Thần", 3200),
+    KIEM_TU(DaoType.KIEM_DAO, "Kiếm Tu", 1_000),
+    KIEM_Y(DaoType.KIEM_DAO, "Kiếm Ý", 10_000),
+    KIEM_TAM(DaoType.KIEM_DAO, "Kiếm Tâm", 100_000),
+    KIEM_HON(DaoType.KIEM_DAO, "Kiếm Hồn", 1_000_000),
+    KIEM_VUC(DaoType.KIEM_DAO, "Kiếm Vực", 10_000_000),
+    KIEM_THAN(DaoType.KIEM_DAO, "Kiếm Thần", 100_000_000),
 
-    /* ================= MA TU ================= */
-    MA_TU_PHÀM(DaoType.MA_DAO, "Ma Tu Phàm", 120),
-    MA_KHÍ(DaoType.MA_DAO, "Ma Khí", 280),
-    HUYẾT_ẢNH(DaoType.MA_DAO, "Huyết Ảnh", 520),
-    MA_ĐAN(DaoType.MA_DAO, "Ma Đan", 900),
-    MA_ANH(DaoType.MA_DAO, "Ma Anh", 1500),
-    MA_VỰC(DaoType.MA_DAO, "Ma Vực", 2300),
-    MA_THẦN(DaoType.MA_DAO, "Ma Thần", 3600);
+    MA_TU(DaoType.MA_DAO, "Ma Tu", 1_000),
+    MA_KHI(DaoType.MA_DAO, "Ma Khí", 10_000),
+    MA_DAN(DaoType.MA_DAO, "Ma Đan", 100_000),
+    MA_ANH(DaoType.MA_DAO, "Ma Anh", 1_000_000),
+    MA_VUC(DaoType.MA_DAO, "Ma Vực", 10_000_000),
+    MA_THAN(DaoType.MA_DAO, "Ma Thần", 100_000_000);
 
     public final DaoType dao;
-    public final String displayName;
-    public final int maxLinhKhi;
+    public final String display;
+    public final long maxLinhKhi;
 
-    RealmStage(DaoType dao, String name, int max) {
+    RealmStage(DaoType dao, String display, long max) {
         this.dao = dao;
-        this.displayName = name;
+        this.display = display;
         this.maxLinhKhi = max;
     }
 
-    /* ================= NEXT STAGE ================= */
     public RealmStage next() {
         RealmStage[] arr = values();
-        for (int i = 0; i < arr.length - 1; i++) {
-            if (arr[i] == this && arr[i + 1].dao == dao) {
+        for (int i = 0; i < arr.length - 1; i++)
+            if (arr[i] == this && arr[i + 1].dao == dao)
                 return arr[i + 1];
-            }
-        }
         return null;
     }
-    }
+}
