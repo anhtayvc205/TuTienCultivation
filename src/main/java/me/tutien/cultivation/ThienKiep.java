@@ -1,5 +1,6 @@
 package me.tutien.cultivation;
 
+import org.bukkit.entity.Player;
 import org.bukkit.*;
 import org.bukkit.entity.Zombie;
 import org.bukkit.scheduler.BukkitRunnable;
