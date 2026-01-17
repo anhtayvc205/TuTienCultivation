@@ -1,5 +1,6 @@
 package me.tutien.cultivation.command;
 
+import org.bukkit.entity.Player;
 import me.tutien.cultivation.*;
 import me.tutien.cultivation.realm.RealmStage;
 import org.bukkit.command.*;
