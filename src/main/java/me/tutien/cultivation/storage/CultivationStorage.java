@@ -1,5 +1,6 @@
-package me.tutien.cultivation;
+package me.tutien.cultivation.storage;
 
+import me.tutien.cultivation.data.PlayerCultivationData;
 import java.util.*;
 
 public class CultivationStorage {
