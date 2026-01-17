@@ -1,0 +1,11 @@
+name: TuTienCultivation
+version: 1.0
+main: me.tutien.cultivation.TuTienCultivation
+api-version: 1.21
+author: TuanAng
+
+commands:
+  tuluyen:
+    description: Bat/tat tu luyen
+  dotpha:
+    description: Dot pha canh gioi
