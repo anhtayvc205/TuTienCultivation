@@ -1,7 +1,6 @@
 package me.tutien.cultivation.listener;
 
 import me.tutien.cultivation.TuTienCultivation;
-import me.tutien.cultivation.data.PlayerCultivationData;
 import org.bukkit.event.*;
 import org.bukkit.event.player.PlayerMoveEvent;
 
@@ -9,9 +8,7 @@ public class CultivationListener implements Listener {
 
     @EventHandler
     public void onMove(PlayerMoveEvent e) {
-        PlayerCultivationData d =
-                TuTienCultivation.storage().get(e.getPlayer().getUniqueId());
-
+        var d = TuTienCultivation.storage().get(e.getPlayer().getUniqueId());
         if (!d.isCultivating()) return;
 
         if (e.getFrom().distance(e.getTo()) > 0.01) {
