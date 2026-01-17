@@ -1,23 +1,37 @@
-package me.tutien.cultivation;
+package me.tutien.cultivation.data;
+
+import me.tutien.cultivation.dao.DaoType;
+import me.tutien.cultivation.realm.RealmStage;
 
 public class PlayerCultivationData {
 
-    private RealmStage stage = RealmStage.LUYEN_KHI;
-    private int linhKhi = 0;
-    private boolean cultivating = false;
+    private DaoType dao = DaoType.NONE;
+    private RealmStage stage;
+    private int linhKhi;
+    private boolean cultivating;
+
+    public DaoType getDao() { return dao; }
+    public RealmStage getStage() { return stage; }
+
+    public void chooseDao(DaoType d) {
+        dao = d;
+        for (RealmStage r : RealmStage.values()) {
+            if (r.dao == d) {
+                stage = r;
+                break;
+            }
+        }
+    }
 
     public boolean isCultivating() { return cultivating; }
     public void setCultivating(boolean b) { cultivating = b; }
 
-    public RealmStage getStage() { return stage; }
-    public int getLinhKhi() { return linhKhi; }
-
     public void addKhi() {
-        linhKhi = Math.min(stage.maxKhi, linhKhi + 1);
+        linhKhi = Math.min(stage.maxLinhKhi, linhKhi + 1);
     }
 
     public boolean canDotPha() {
-        return linhKhi >= stage.maxKhi;
+        return linhKhi >= stage.maxLinhKhi;
     }
 
     public void dotPha() {
@@ -26,14 +40,5 @@ public class PlayerCultivationData {
             stage = next;
             linhKhi = 0;
         }
-    }
-
-    /* ====== STAT ====== */
-    public double getBonusHealth() {
-        return stage.ordinal() * 4.0;
-    }
-
-    public double getBonusDamage() {
-        return stage.ordinal() * 1.0;
     }
 }
