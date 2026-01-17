@@ -1,42 +1,24 @@
 package me.tutien.cultivation.data;
 
-import me.tutien.cultivation.dao.DaoType;
-import me.tutien.cultivation.realm.RealmStage;
+import me.tutien.cultivation.stage.RealmStage;
 
 public class PlayerCultivationData {
 
-    private DaoType dao = DaoType.NONE;
-    private RealmStage stage;
-    private long linhKhi;
-    private boolean cultivating;
+    private RealmStage stage = RealmStage.LUYEN_KHI;
+    private double linhKhi = 0;
 
-    public DaoType getDao() { return dao; }
     public RealmStage getStage() { return stage; }
-    public long getLinhKhi() { return linhKhi; }
-
-    public void chooseDao(DaoType d) {
-        dao = d;
-        linhKhi = 0;
-        for (RealmStage r : RealmStage.values())
-            if (r.dao == d) { stage = r; break; }
-    }
-
-    public void addKhi(long amount) {
-        linhKhi = Math.min(stage.maxLinhKhi, linhKhi + amount);
-    }
 
     public boolean canDotPha() {
-        return linhKhi >= stage.maxLinhKhi;
+        return linhKhi >= stage.getNeed();
     }
 
-    public void dotPha() {
-        RealmStage n = stage.next();
-        if (n != null) {
-            stage = n;
-            linhKhi = 0;
-        }
+    public void nextStage() {
+        stage = stage.next();
+        linhKhi = 0;
     }
 
-    public boolean isCultivating() { return cultivating; }
-    public void setCultivating(boolean b) { cultivating = b; }
+    public void addLinhKhi(double v) {
+        linhKhi += v;
+    }
 }
