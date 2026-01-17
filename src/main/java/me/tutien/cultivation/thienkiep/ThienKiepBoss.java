@@ -1,52 +1,51 @@
 package me.tutien.cultivation.thienkiep;
 
-import me.tutien.cultivation.realm.RealmStage;
+import me.tutien.cultivation.data.PlayerCultivationData;
 import org.bukkit.*;
 import org.bukkit.attribute.Attribute;
 import org.bukkit.entity.*;
+import org.bukkit.scheduler.BukkitRunnable;
 
 public class ThienKiepBoss {
 
-    public static void spawnWave(Player p, RealmStage stage, int wave) {
+    public static void spawnMobWave(Player p, int wave) {
         World w = p.getWorld();
-        Location l = p.getLocation();
-
-        int amount = 2 + wave * 2;
-        for (int i = 0; i < amount; i++) {
-            Zombie z = (Zombie) w.spawnEntity(
-                    l.clone().add(Math.random()*6-3, 0, Math.random()*6-3),
-                    EntityType.ZOMBIE
-            );
-
-            double hp = 20 + stage.ordinal() * 10 + wave * 5;
-
-            z.setCustomName("§cThiên Kiếp Linh Hồn");
-            z.setCustomNameVisible(true);
-            z.getAttribute(Attribute.MAX_HEALTH).setBaseValue(hp);
-            z.setHealth(hp);
-            z.setTarget(p);
+        for (int i = 0; i < wave * 3; i++) {
+            Zombie z = w.spawn(p.getLocation().add(Math.random()*3,0,Math.random()*3), Zombie.class);
+            z.setCustomName("§cThiên Kiếp Dư Linh");
         }
     }
 
-    public static void spawnBoss(Player p, RealmStage stage) {
-
+    public static void spawnBoss(Player p, PlayerCultivationData data) {
         World w = p.getWorld();
-        Location l = p.getLocation();
+        Location loc = p.getLocation().add(0,0,3);
 
-        WitherSkeleton boss = (WitherSkeleton) w.spawnEntity(l, EntityType.WITHER_SKELETON);
-
-        double hp = 300 + stage.ordinal() * 120;
-        double dmg = 10 + stage.ordinal() * 4;
-
-        boss.setCustomName("§4§lThiên Đạo · " + stage.display);
+        WitherSkeleton boss = w.spawn(loc, WitherSkeleton.class);
+        boss.setCustomName("§4§lThiên Kiếp Chi Chủ");
         boss.setCustomNameVisible(true);
 
-        boss.getAttribute(Attribute.MAX_HEALTH).setBaseValue(hp);
-        boss.getAttribute(Attribute.ATTACK_DAMAGE).setBaseValue(dmg);
+        double hp = 100 + data.getStage().ordinal() * 50;
+
+        boss.getAttribute(Attribute.GENERIC_MAX_HEALTH).setBaseValue(hp);
         boss.setHealth(hp);
+        boss.getAttribute(Attribute.GENERIC_ATTACK_DAMAGE).setBaseValue(8 + data.getStage().ordinal() * 2);
 
-        boss.setTarget(p);
+        new BukkitRunnable() {
+            @Override
+            public void run() {
+                if (boss.isDead() || !p.isOnline()) {
+                    cancel();
+                    return;
+                }
 
-        ThienKiepSkill.bind(boss, stage);
+                // skill sét
+                boss.getWorld().strikeLightning(p.getLocation());
+
+                p.damage(3, boss);
+            }
+        }.runTaskTimer(
+                Bukkit.getPluginManager().getPlugin("TuTienCultivation"),
+                40, 60
+        );
     }
 }
