@@ -7,27 +7,22 @@ public class PlayerCultivationData {
 
     private DaoType dao = DaoType.NONE;
     private RealmStage stage;
-    private int linhKhi;
+    private long linhKhi;
     private boolean cultivating;
 
     public DaoType getDao() { return dao; }
     public RealmStage getStage() { return stage; }
+    public long getLinhKhi() { return linhKhi; }
 
     public void chooseDao(DaoType d) {
         dao = d;
-        for (RealmStage r : RealmStage.values()) {
-            if (r.dao == d) {
-                stage = r;
-                break;
-            }
-        }
+        linhKhi = 0;
+        for (RealmStage r : RealmStage.values())
+            if (r.dao == d) { stage = r; break; }
     }
 
-    public boolean isCultivating() { return cultivating; }
-    public void setCultivating(boolean b) { cultivating = b; }
-
-    public void addKhi() {
-        linhKhi = Math.min(stage.maxLinhKhi, linhKhi + 1);
+    public void addKhi(long amount) {
+        linhKhi = Math.min(stage.maxLinhKhi, linhKhi + amount);
     }
 
     public boolean canDotPha() {
@@ -35,10 +30,13 @@ public class PlayerCultivationData {
     }
 
     public void dotPha() {
-        RealmStage next = stage.next();
-        if (next != null) {
-            stage = next;
+        RealmStage n = stage.next();
+        if (n != null) {
+            stage = n;
             linhKhi = 0;
         }
     }
+
+    public boolean isCultivating() { return cultivating; }
+    public void setCultivating(boolean b) { cultivating = b; }
 }
