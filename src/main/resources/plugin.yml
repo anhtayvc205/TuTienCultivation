@@ -5,8 +5,5 @@ api-version: 1.21
 
 commands:
   tutien:
-    description: Bắt đầu tu tiên
   tuluyen:
-    description: Tu luyện linh khí
   dotpha:
-    description: Đột phá cảnh giới
