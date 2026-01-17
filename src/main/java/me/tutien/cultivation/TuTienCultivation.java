@@ -1,8 +1,5 @@
 package me.tutien.cultivation;
 
-import me.tutien.cultivation.command.*;
-import me.tutien.cultivation.core.CultivationTask;
-import me.tutien.cultivation.storage.CultivationStorage;
 import org.bukkit.plugin.java.JavaPlugin;
 
 public class TuTienCultivation extends JavaPlugin {
@@ -16,8 +13,11 @@ public class TuTienCultivation extends JavaPlugin {
         getCommand("tuluyen").setExecutor(new TuluyenCommand());
         getCommand("dotpha").setExecutor(new DotPhaCommand());
 
+        getServer().getPluginManager().registerEvents(new CombatListener(), this);
+
         new CultivationTask().runTaskTimer(this, 20, 20);
-        getLogger().info("TuTienCultivation ENABLED");
+
+        getLogger().info("TuTienCultivation ENABLED (Part 1)");
     }
 
     public static CultivationStorage storage() {
