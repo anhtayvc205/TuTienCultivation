@@ -31,7 +31,7 @@ public class TuLuyenCommand implements CommandExecutor {
                     d.addKhi(gain);
 
                     p.sendActionBar("§bLinh khí: " + d.getLinhKhi()
-                            + "§7 / " + d.getStage().maxLinhKhi);
+                            + "§7 / " + d.getStage().getNeedLinhKhi());
                 }
             }.runTaskTimer(TuTienCultivation.getPlugin(TuTienCultivation.class), 20, 20);
         }
