@@ -1,9 +1,10 @@
-cultivation:
-  tick: 20          # mỗi bao nhiêu tick hút linh khí (20 = 1s)
-  base-health: 20.0 # máu gốc
-  health-per-realm: 4.0
-  damage-per-realm: 1.0
+# Linh khí nhận mỗi giây khi tu luyện
+linh-khi-moi-giay: 5
 
+# Có cho di chuyển khi tu luyện không
+move-cancel-cultivation: true
+
+# Thiên kiếp
 thien-kiep:
-  boss-health: 40
-  duration: 200
+  bat-buoc: true
+  wave: 3
