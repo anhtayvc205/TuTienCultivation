@@ -1,24 +1,36 @@
 package me.tutien.cultivation.data;
 
-import me.tutien.cultivation.stage.RealmStage;
+import me.tutien.cultivation.realm.RealmStage;
 
 public class PlayerCultivationData {
 
-    private RealmStage stage = RealmStage.LUYEN_KHI;
+    private RealmStage realm = RealmStage.LUYEN_KHI;
     private double linhKhi = 0;
 
-    public RealmStage getStage() { return stage; }
+    public RealmStage getRealm() {
+        return realm;
+    }
+
+    public void setRealm(RealmStage realm) {
+        this.realm = realm;
+    }
+
+    public double getLinhKhi() {
+        return linhKhi;
+    }
+
+    public void addLinhKhi(double amount) {
+        this.linhKhi += amount;
+    }
 
     public boolean canDotPha() {
-        return linhKhi >= stage.getNeed();
+        return linhKhi >= realm.getNeedLinhKhi();
     }
 
-    public void nextStage() {
-        stage = stage.next();
-        linhKhi = 0;
-    }
-
-    public void addLinhKhi(double v) {
-        linhKhi += v;
+    public void dotPha() {
+        if (canDotPha()) {
+            realm = realm.next();
+            linhKhi = 0;
+        }
     }
 }
