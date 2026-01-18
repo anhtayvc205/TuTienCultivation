@@ -1,23 +1,25 @@
 package me.tutien.cultivation.command;
 
-import org.bukkit.entity.Player;
-import me.tutien.cultivation.*;
-import me.tutien.cultivation.thienkiep.ThienKiep;
+import me.tutien.cultivation.TuTienCultivation;
+import me.tutien.cultivation.data.PlayerCultivationData;
 import org.bukkit.command.*;
 import org.bukkit.entity.Player;
 
 public class DotPhaCommand implements CommandExecutor {
 
-    public boolean onCommand(CommandSender s, Command c, String l, String[] a) {
-        if (!(s instanceof Player p)) return true;
+    @Override
+    public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
+        if (!(sender instanceof Player p)) return true;
 
-        var d = TuTienCultivation.storage().get(p.getUniqueId());
-        if (!d.canDotPha()) {
-            p.sendMessage("§cChưa đủ linh khí!");
+        PlayerCultivationData data = TuTienCultivation.storage().get(p.getUniqueId());
+
+        if (!data.canDotPha()) {
+            p.sendMessage("§cChưa đủ linh khí để đột phá!");
             return true;
         }
 
-        ThienKiep.start(p, d);
+        data.dotPha();
+        p.sendMessage("§aĐột phá thành công! Cảnh giới: §e" + data.getRealm().getName());
         return true;
     }
 }
