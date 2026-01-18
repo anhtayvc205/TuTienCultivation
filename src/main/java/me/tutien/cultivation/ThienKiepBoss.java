@@ -114,7 +114,7 @@ public class ThienKiepBoss {
 
         if (next != null) {
             data.setStage(next);
-            data.resetKhi();
+            data.setLinhKhi(0);;
 
             p.sendMessage("§8[§cThiên Đạo§8] §7Ngươi… đã vượt qua.");
             p.sendMessage("§6✦ Đột phá thành công → §e" + next.display);
