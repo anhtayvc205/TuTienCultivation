@@ -4,7 +4,7 @@ import me.tutien.cultivation.command.*;
 import me.tutien.cultivation.listener.CombatListener;
 import me.tutien.cultivation.listener.CultivationListener;
 import me.tutien.cultivation.storage.CultivationStorage;
-import me.tutien.cultivation.task.CultivationTask;
+import org.bukkit.command.PluginCommand;
 import org.bukkit.plugin.java.JavaPlugin;
 
 public final class TuTienCultivation extends JavaPlugin {
@@ -17,27 +17,40 @@ public final class TuTienCultivation extends JavaPlugin {
         instance = this;
         storage = new CultivationStorage();
 
-        // ===== COMMAND =====
-        getCommand("tutien").setExecutor(new TutienCommand());
-        getCommand("tuluyen").setExecutor(new TuluyenCommand());
-        getCommand("dotpha").setExecutor(new DotPhaCommand());
+        registerCommands();
+        registerListeners();
 
-        // ===== LISTENER =====
-        getServer().getPluginManager().registerEvents(new CombatListener(), this);
-        getServer().getPluginManager().registerEvents(new CultivationListener(), this);
-
-        // ===== TASK =====
-        new CultivationTask().runTaskTimer(this, 20, 20);
-
-        getLogger().info("§aTuTienCultivation ENABLED (Paper 1.21.8)");
+        getLogger().info("TuTienCultivation ENABLED (Paper 1.21.8)");
     }
 
     @Override
     public void onDisable() {
-        getLogger().info("§cTuTienCultivation DISABLED");
+        getLogger().info("TuTienCultivation DISABLED");
     }
 
-    // ===== STATIC ACCESS =====
+    // ================= COMMAND =================
+    private void registerCommands() {
+        safeCommand("tutien", new TutienCommand());
+        safeCommand("tuluyen", new TuluyenCommand());
+        safeCommand("dotpha", new DotPhaCommand());
+    }
+
+    private void safeCommand(String name, Object executor) {
+        PluginCommand cmd = getCommand(name);
+        if (cmd == null) {
+            getLogger().severe("❌ Command /" + name + " chưa khai trong plugin.yml");
+            return;
+        }
+        cmd.setExecutor((org.bukkit.command.CommandExecutor) executor);
+    }
+
+    // ================= LISTENER =================
+    private void registerListeners() {
+        getServer().getPluginManager().registerEvents(new CombatListener(), this);
+        getServer().getPluginManager().registerEvents(new CultivationListener(), this);
+    }
+
+    // ================= STATIC ACCESS =================
     public static TuTienCultivation getInstance() {
         return instance;
     }
