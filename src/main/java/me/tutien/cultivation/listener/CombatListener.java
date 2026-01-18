@@ -1,5 +1,6 @@
 package me.tutien.cultivation;
 
+import me.tutien.cultivation.data.PlayerCultivationData;
 import org.bukkit.event.*;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.entity.Player;
