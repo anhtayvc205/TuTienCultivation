@@ -4,7 +4,7 @@ import java.util.UUID;
 
 public class PlayerCultivationData {
 
-    private UUID uuid;
+    private final UUID uuid;
 
     private DaoType dao = DaoType.NONE;
     private RealmStage stage = RealmStage.PHAM_NHAN;
@@ -16,9 +16,7 @@ public class PlayerCultivationData {
         this.uuid = uuid;
     }
 
-    /* =====================
-       DAO – CẢNH GIỚI
-       ===================== */
+    /* ===== DAO ===== */
     public DaoType getDao() {
         return dao;
     }
@@ -27,6 +25,7 @@ public class PlayerCultivationData {
         this.dao = dao;
     }
 
+    /* ===== CẢNH GIỚI ===== */
     public RealmStage getStage() {
         return stage;
     }
@@ -35,33 +34,24 @@ public class PlayerCultivationData {
         this.stage = stage;
     }
 
-    /* =====================
-       LINH KHÍ
-       ===================== */
+    /* ===== LINH KHÍ ===== */
     public long getLinhKhi() {
         return linhKhi;
     }
 
     public void addLinhKhi(long amount) {
-        this.linhKhi += amount;
+        linhKhi += amount;
     }
 
-    // 👉 HÀM BỊ THIẾU – FIX LỖI BUILD
     public void setLinhKhi(long value) {
-        this.linhKhi = value;
+        linhKhi = value;
     }
 
     public long getNeedLinhKhi() {
         return stage.maxLinhKhi;
     }
 
-    public boolean canDotPha() {
-        return linhKhi >= stage.maxLinhKhi && stage.next() != null;
-    }
-
-    /* =====================
-       TU LUYỆN
-       ===================== */
+    /* ===== TU LUYỆN ===== */
     public boolean isCultivating() {
         return cultivating;
     }
@@ -70,9 +60,11 @@ public class PlayerCultivationData {
         this.cultivating = cultivating;
     }
 
-    /* =====================
-       ĐỘT PHÁ
-       ===================== */
+    /* ===== ĐỘT PHÁ ===== */
+    public boolean canDotPha() {
+        return linhKhi >= stage.maxLinhKhi && stage.next() != null;
+    }
+
     public void dotPhaSuccess() {
         RealmStage next = stage.next();
         if (next != null) {
@@ -81,9 +73,7 @@ public class PlayerCultivationData {
         }
     }
 
-    /* =====================
-       BONUS SỨC MẠNH
-       ===================== */
+    /* ===== BONUS ===== */
     public double getBonusDamage() {
         return stage.ordinal() * 1.5;
     }
