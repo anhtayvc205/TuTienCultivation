@@ -5,18 +5,23 @@ import java.util.UUID;
 public class PlayerCultivationData {
 
     private final UUID uuid;
-
-    private DaoType dao = DaoType.NONE;
-    private RealmStage stage = RealmStage.PHAM_NHAN;
-
-    private long linhKhi = 0;
-    private boolean cultivating = false;
+    private DaoType dao;
+    private RealmStage stage;
+    private long linhKhi;
+    private boolean cultivating;
 
     public PlayerCultivationData(UUID uuid) {
         this.uuid = uuid;
+        this.dao = DaoType.CHINH_DAO;
+        this.stage = RealmStage.PHAM_NHAN;
+        this.linhKhi = 0;
+        this.cultivating = false;
     }
 
-    /* ===== DAO ===== */
+    public UUID getUuid() {
+        return uuid;
+    }
+
     public DaoType getDao() {
         return dao;
     }
@@ -25,7 +30,6 @@ public class PlayerCultivationData {
         this.dao = dao;
     }
 
-    /* ===== CẢNH GIỚI ===== */
     public RealmStage getStage() {
         return stage;
     }
@@ -34,51 +38,31 @@ public class PlayerCultivationData {
         this.stage = stage;
     }
 
-    /* ===== LINH KHÍ ===== */
     public long getLinhKhi() {
         return linhKhi;
     }
 
-    public void addLinhKhi(long amount) {
-        linhKhi += amount;
+    public void setLinhKhi(long linhKhi) {
+        this.linhKhi = linhKhi;
     }
 
-    public void setLinhKhi(long value) {
-        linhKhi = value;
+    public void addLinhKhi(long amount) {
+        this.linhKhi += amount;
+    }
+
+    public void resetLinhKhi() {
+        this.linhKhi = 0;
     }
 
     public long getNeedLinhKhi() {
         return stage.maxLinhKhi;
     }
 
-    /* ===== TU LUYỆN ===== */
     public boolean isCultivating() {
         return cultivating;
     }
 
     public void setCultivating(boolean cultivating) {
         this.cultivating = cultivating;
-    }
-
-    /* ===== ĐỘT PHÁ ===== */
-    public boolean canDotPha() {
-        return linhKhi >= stage.maxLinhKhi && stage.next() != null;
-    }
-
-    public void dotPhaSuccess() {
-        RealmStage next = stage.next();
-        if (next != null) {
-            stage = next;
-            linhKhi = 0;
-        }
-    }
-
-    /* ===== BONUS ===== */
-    public double getBonusDamage() {
-        return stage.ordinal() * 1.5;
-    }
-
-    public double getBonusHealth() {
-        return stage.ordinal() * 2.0;
     }
 }
