@@ -1,9 +1,13 @@
 name: TuTienCultivation
-version: 1.0
 main: me.tutien.cultivation.TuTienCultivation
+version: 1.0
 api-version: 1.21
 author: TuTien
+
 commands:
   tutien:
+    description: Bắt đầu con đường tu tiên
   tuluyen:
+    description: Bắt đầu tu luyện
   dotpha:
+    description: Đột phá cảnh giới
