@@ -2,6 +2,7 @@ package me.tutien.cultivation;
 
 import org.bukkit.*;
 import org.bukkit.attribute.Attribute;
+import org.bukkit.attribute.AttributeInstance;
 import org.bukkit.entity.*;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.util.Vector;
@@ -38,10 +39,11 @@ public class ThienKiepBoss {
         int lvl = data.getStage().ordinal() + 1;
         double maxHp = 300 + lvl * 120;
 
-        boss.getAttribute(Attribute.MAX_HEALTH).setBaseValue(maxHp);
+        setAttr(boss, Attribute.GENERIC_MAX_HEALTH, maxHp);
         boss.setHealth(maxHp);
-        boss.getAttribute(Attribute.ATTACK_DAMAGE).setBaseValue(8 + lvl * 2);
-        boss.getAttribute(Attribute.MOVEMENT_SPEED).setBaseValue(0.35);
+
+        setAttr(boss, Attribute.GENERIC_ATTACK_DAMAGE, 8 + lvl * 2);
+        setAttr(boss, Attribute.GENERIC_MOVEMENT_SPEED, 0.35);
 
         p.sendMessage("§8[§cThiên Đạo§8] §4Thiên kiếp cuối cùng… bắt đầu!");
 
@@ -84,13 +86,13 @@ public class ThienKiepBoss {
                     boss.getWorld().createExplosion(p.getLocation(), 2.5F, false, false);
                 }
 
-                /* ================= SKILL 4: PHÁP CẦU (phase 2) ================= */
+                /* ================= SKILL 4: PHÁP CẦU ================= */
                 if (phase2 && tick % 4 == 0) {
                     Fireball fb = boss.launchProjectile(Fireball.class);
                     fb.setYield(1.5f);
                 }
 
-                /* ================= SKILL 5: HÚT LINH KHÍ (phase 2) ================= */
+                /* ================= SKILL 5: HÚT LINH KHÍ ================= */
                 if (phase2 && tick % 7 == 0) {
                     long drain = Math.min(1000, data.getLinhKhi());
                     data.setLinhKhi(data.getLinhKhi() - drain);
@@ -105,7 +107,7 @@ public class ThienKiepBoss {
                     p.setVelocity(v);
                 }
             }
-        }.runTaskTimer(TuTienCultivation.get(), 40, 40);
+        }.runTaskTimer(TuTienCultivation.getInstance(), 40, 40);
     }
 
     /* ======================== KẾT THÚC ======================== */
@@ -114,7 +116,7 @@ public class ThienKiepBoss {
 
         if (next != null) {
             data.setStage(next);
-            data.setLinhKhi(0);;
+            data.setLinhKhi(0);
 
             p.sendMessage("§8[§cThiên Đạo§8] §7Ngươi… đã vượt qua.");
             p.sendMessage("§6✦ Đột phá thành công → §e" + next.display);
@@ -124,6 +126,12 @@ public class ThienKiepBoss {
         } else {
             p.sendMessage("§8[§cThiên Đạo§8] §dNgươi đã đứng ngoài thiên đạo…");
         }
+    }
+
+    /* ======================== UTIL ======================== */
+    private static void setAttr(LivingEntity e, Attribute attr, double val) {
+        AttributeInstance ins = e.getAttribute(attr);
+        if (ins != null) ins.setBaseValue(val);
     }
 
     private static double rand() {
