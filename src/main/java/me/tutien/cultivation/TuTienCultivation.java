@@ -1,5 +1,6 @@
 package me.tutien.cultivation;
 
+import org.bukkit.command.PluginCommand;
 import org.bukkit.plugin.java.JavaPlugin;
 
 public final class TuTienCultivation extends JavaPlugin {
@@ -13,16 +14,39 @@ public final class TuTienCultivation extends JavaPlugin {
         saveDefaultConfig();
         storage = new CultivationStorage();
 
-        getCommand("tutien").setExecutor(new TutienCommand());
-        getCommand("tuluyen").setExecutor(new TuluyenCommand());
-        getCommand("dotpha").setExecutor(new DotPhaCommand());
+        // ===== COMMAND =====
+        safeCommand("tutien", new TutienCommand());
+        safeCommand("tuluyen", new TuluyenCommand());
+        safeCommand("dotpha", new DotPhaCommand());
 
+        // ===== LISTENER =====
         getServer().getPluginManager().registerEvents(new CultivationListener(), this);
         getServer().getPluginManager().registerEvents(new CombatListener(), this);
 
-        getLogger().info("TuTienCultivation ENABLED (VIP CORE)");
+        // ===== SKILL LISTENER =====
+        getServer().getPluginManager().registerEvents(new SwordSkill(), this);
+        getServer().getPluginManager().registerEvents(new MaSkill(), this);
+        getServer().getPluginManager().registerEvents(new ChinhDaoSkill(), this);
+
+        getLogger().info("§aTuTienCultivation ENABLED (VIP PRO)");
     }
 
+    @Override
+    public void onDisable() {
+        getLogger().info("§cTuTienCultivation DISABLED");
+    }
+
+    // ================= COMMAND SAFE REGISTER =================
+    private void safeCommand(String name, Object executor) {
+        PluginCommand cmd = getCommand(name);
+        if (cmd == null) {
+            getLogger().severe("❌ Command /" + name + " chưa khai trong plugin.yml");
+            return;
+        }
+        cmd.setExecutor((org.bukkit.command.CommandExecutor) executor);
+    }
+
+    // ================= STATIC ACCESS =================
     public static TuTienCultivation get() {
         return instance;
     }
